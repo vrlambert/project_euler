@@ -23,21 +23,26 @@ def eratosthenes_old(limit):
 
     return set(to_check) - flagged
 
-def eratosthenes(limit):
-    sieve = [None, None] + [False] * (limit - 1)
-    crosslimit = int(floor(sqrt(limit)))
-    for n in range(4, limit + 1, 2):
-        sieve[n] = True
-    for n in range(3, crosslimit):
-        if not sieve[n]:
-            for m in range(n*n, limit, 2*n):
-                sieve[m] = True
-    return [i for i, x in enumerate(sieve) if x is False]
 # print eratosthenes_old(int(limit))
 # print sum(eratosthenes_old(int(limit)))
 # 142913828922
 # runs in 4.4s
 
+# version written using project euler provided tips
+def eratosthenes(limit):
+    sievebound = (limit - 1) / 2
+    print sievebound
+    sieve = [None,] + [False] * sievebound
+    crosslimit = int(floor(sqrt(limit)) - 1) / 2
+    # for n in range(4, limit + 1, 2):
+    #     sieve[n] = True
+    for i in range(1, crosslimit):
+        if not sieve[i]:
+            for j in range(2 * i * (i + 1), sievebound + 1, 2 * i + 1):
+                sieve[j] = True
+    return [2] + [2 * i + 1 for i, x in enumerate(sieve) if x is False]
+
 # new method using the structure provided in the
-print sum(eratosthenes(limit))
-# runs in < 1s
+res = eratosthenes(limit)
+print sum(res)
+# runs in 0.317s
