@@ -39,7 +39,9 @@ def brute_force():
 
 amount = 200
 def ways(target, avc):
+    # base case, if we are at the smallest coin return 1 way
     if avc < 1: return 1
+    # initialize a counter for the number of ways
     res = 0
     while target >= 0:
         res += ways(target, avc - 1)
