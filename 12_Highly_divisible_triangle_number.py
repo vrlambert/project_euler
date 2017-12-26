@@ -13,7 +13,7 @@ def main(n_factors):
     while factors < n_factors:
         triangle = n * (n + 1) / 2
         if triangle > prime_limit:
-            prime_limit *= 10
+            prime_limit *= 2
             primes = update_primes(prime_limit)
         factors = get_number_factors(triangle, primes = primes)
         n += 1
@@ -39,6 +39,8 @@ def get_prime_factors(n, primes = None):
         primes = update_primes(n)
     factors = [0 for _ in primes]
     for i, prime in enumerate(primes):
+        if prime > n:
+            break
         while n % prime == 0:
             n /= prime
             factors[i] += 1
