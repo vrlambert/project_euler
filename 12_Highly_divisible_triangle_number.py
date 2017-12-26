@@ -8,29 +8,35 @@ def main(n_factors):
     n = 1
     triangle = 0
     factors = 0
+    prime_limit = 1000
+    primes = update_primes(prime_limit)
     while factors < n_factors:
         triangle = n * (n + 1) / 2
-        factors = get_number_factors(triangle)
+        if triangle > prime_limit:
+            prime_limit *= 10
+            primes = update_primes(prime_limit)
+        factors = get_number_factors(triangle, primes = primes)
         n += 1
 
     return triangle, factors
 
-
+def update_primes(limit):
+    return eratosthenes(int(floor(sqrt(limit))))
 
 def get_factors(n):
     pass
 
-def get_number_factors(n):
+def get_number_factors(n, primes = None):
     if n < 2:
         return 0
-    _ , factors = zip(*get_prime_factors(n))
+    _ , factors = zip(*get_prime_factors(n, primes))
     return reduce(lambda x, y: x * (y + 1), factors, 1)
 
-def get_prime_factors(n):
+def get_prime_factors(n, primes = None):
     if n < 2:
         return 0
-    prime_limit = int(floor(sqrt(n)))
-    primes = eratosthenes(prime_limit)
+    if primes is None:
+        primes = update_primes(n)
     factors = [0 for _ in primes]
     for i, prime in enumerate(primes):
         while n % prime == 0:
