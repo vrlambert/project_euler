@@ -36,8 +36,9 @@ def eratosthenes(limit):
 
 def get_prime_factors(n, primes = None):
     if n < 2:
-        return 0
+        return [0]
     if primes is None:
+        limit = n
         primes = eratosthenes(int(floor(sqrt(limit))))
     factors = [0 for _ in primes]
     for i, prime in enumerate(primes):
