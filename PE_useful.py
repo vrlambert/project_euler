@@ -57,3 +57,22 @@ def get_number_factors(n, primes = None):
         return 0
     _ , factors = zip(*get_prime_factors(n, primes))
     return reduce(lambda x, y: x * (y + 1), factors, 1)
+
+def get_factors(n):
+    p_factors = get_prime_factors(n)
+    if len(p_factors) == 1:
+        return [1, n]
+    prime_divisors, multiplicity = zip(*p_factors)
+
+    factors = []
+    def find_factors(prime_divisors, multiplicity, current_divisor = 0, current_result = 1):
+        if current_divisor == len(prime_divisors):
+            factors.append(current_result)
+            return
+
+        for i in range(multiplicity[current_divisor] + 1):
+            find_factors(prime_divisors, multiplicity, current_divisor + 1, current_result)
+            current_result *= prime_divisors[current_divisor]
+
+    find_factors(prime_divisors, multiplicity)
+    return sorted(factors)
