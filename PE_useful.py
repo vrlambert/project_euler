@@ -76,3 +76,9 @@ def get_factors(n):
 
     find_factors(prime_divisors, multiplicity)
     return sorted(factors)
+
+def word_value(s):
+    """Returns the word value, where the value is the sum of the letters
+    position in the alphabet. Takes in the word as a string"""
+    s = s.upper()
+    return sum(map(lambda s: ord(s) - 64, list(s)))
